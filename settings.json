@@ -1,0 +1,231 @@
+{
+  /*
+   * Updates
+   */
+  "update.mode": "none",
+  "update.enableWindowsBackgroundUpdates": false,
+  "update.showReleaseNotes": false,
+  /*
+   * Workbench
+   */
+  "workbench.activityBar.location": "bottom",
+  "workbench.sideBar.location": "right",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.tree.indent": 12,
+  "workbench.colorTheme": "Default High Contrast",
+  "workbench.editor.tabSizingFixedMaxWidth": 140,
+  /*
+   * Editor Defaults
+   */
+  "editor.cursorBlinking": "phase",
+  "editor.semanticHighlighting.enabled": true,
+  "editor.formatOnSave": false,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Consolas, Cascadia Mono, Cascadia Code, 'Courier New', monospace",
+  "editor.formatOnPaste": true,
+  "editor.minimap.enabled": false,
+  "editor.accessibilitySupport": "off",
+  "editor.cursorWidth": 4,
+  "editor.fontSize": 13,
+  "editor.tabCompletion": "on",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  /*
+   * Explorer
+   */
+  "explorer.compactFolders": false,
+  "explorer.sortOrder": "filesFirst",
+  "explorer.fileNesting.enabled": true,
+  /*
+   * Terminal
+   */
+  "terminal.integrated.cursorStyleInactive": "underline",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.tabs.defaultIcon": "plug",
+  "terminal.integrated.fontFamily": "Cascadia Code",
+  /*
+   * Files
+   */
+  "files.autoSave": "afterDelay",
+  "files.autoGuessEncoding": true,
+  "files.trimTrailingWhitespace": true,
+  "files.associations": {
+    "*.yml": "yaml",
+    "*.yaml": "yaml",
+    "*.md": "markdown",
+    "*.sh": "shellscript",
+    "*.bash": "shellscript",
+    "*.zsh": "shellscript"
+  },
+  /*
+   * Git
+   */
+  "git.confirmSync": false,
+  "git.openRepositoryInParentFolders": "never",
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false,
+    "mermaid.flowchart": true,
+    "python": true
+  },
+  "gitlens.advanced.messages": {
+    "suppressFileNotUnderSourceControlWarning": true
+  },
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  /*
+   * Prettier
+   */
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.embeddedLanguageFormatting": "auto",
+  "prettier.bracketSpacing": true,
+  "prettier.arrowParens": "avoid",
+  "prettier.endOfLine": "lf",
+  "prettier.singleQuote": true,
+  /*
+   * Java
+   */
+  "java.inlayHints.parameterNames.enabled": "none",
+  "jdk.jdkhome": "c:\\Users\\hawkinsr\\OneDrive - Reed Elsevier Group ICO Reed Elsevier Inc\\Desktop\\Work\\learn",
+  /*
+   * Python
+   */
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.addHoverSummaries": true,
+  "python.analysis.autoIndent": true,
+  "python.analysis.autoFormatStrings": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.generateWithTypeAnnotation": true,
+  "python.analysis.languageServerMode": "full",
+  "python.analysis.typeEvaluation.deprecateTypingAliases": true,
+  "python.terminal.shellIntegration.enabled": true,
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.tabSize": 4,
+    "editor.rulers": [88],
+    "editor.wordWrap": "bounded",
+    "editor.hover.delay": 200
+  },
+  // python extensions
+  "ruff.lineLength": 88,
+  "ruff.lint.ignore": [
+    "E501", // line too long
+    "D" // docstring issues
+  ],
+  "ruff.lint.select": ["E", "F", "I"],
+  "autoDocstring.docstringFormat": "numpy",
+  "autoDocstring.quoteStyle": "'''",
+  "ruff.configurationPreference": "filesystemFirst",
+  /*
+      YAML
+    */
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.formatOnSave": false,
+    "editor.autoIndent": "advanced",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.quickSuggestions": {
+      "strings": true,
+      "other": false,
+      "comments": true
+    }
+  },
+  "yaml.hover": true,
+  "yaml.completion": true,
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-action.json": [
+      ".github/actions/*/action.yml",
+      ".github/actions/*/action.yaml"
+    ],
+    "https://json.schemastore.org/github-workflow.json": [
+      ".github/workflows/*.yml",
+      ".github/workflows/*.yaml"
+    ]
+  },
+  "yaml.schemaStore.enable": true,
+  "yaml.format.enable": true,
+  "yaml.validate": true,
+  /*
+   * Bash / Shell
+   */
+  "[shellscript]": {
+    "files.eol": "\n",
+    "editor.defaultColorDecorators": "never",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.rulers": [80],
+    "editor.wordWrap": "on",
+    "editor.defaultFormatter": "shakram02.bash-beautify",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.shellcheck": "always"
+    }
+  },
+  "shellcheck.enable": true,
+  "shellcheck.customArgs": [
+    "-e",
+    "SC1090", // allow source of files that do not exist
+    "-e",
+    "SC1091" // allow source of files that do not exist
+  ],
+  "bashIde.shellcheckPath": "shellcheck",
+  "bashIde.explainshellEndpoint": "https://explainshell.com",
+  "bashIde.globPattern": "**/*@(.sh|.inc|.bash|.command)",
+  "bashIde.shfmt.languageDialect": "bash",
+  /*
+   * Markdown
+   */
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": "on"
+    }
+  },
+  "markdown-preview-enhanced.previewTheme": "monokai.css",
+  "markdown-preview-enhanced.codeBlockTheme": "github-dark.css",
+  /*
+   * JavaScript / TypeScript
+   */
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "strings": true,
+      "other": false,
+      "comments": true
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always",
+      "source.addMissingImports.ts": "explicit",
+      "source.organizeImports": "always"
+    }
+  },
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.suggest.includeCompletionsForImportStatements": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.preferences.autoImportFileExcludePatterns": [],
+  "javascript.inlayHints.parameterNames.suppressWhenArgumentMatchesName": false,
+  // Svelte
+  "svelte.enable-ts-plugin": true,
+  "[svelte]": {},
+
+  /*
+  * misc
+  */
+  "search.seedWithNearestWord": true,
+  "redhat.telemetry.enabled": false
+}
