@@ -1,0 +1,147 @@
+/*
+* author: rhawk117
+* lastModified: 6/26/2025
+*/
+{
+	"Shebang": {
+		"prefix": "defsh",
+		"body": [
+			"#!/bin/bash",
+			"$0"
+		],
+		"description": "Bash shebang line"
+	},
+	"Echo": {
+		"prefix": "echo",
+		"body": [
+			"echo \"${1:message}\"",
+			"$0"
+		],
+		"description": "Echo a message to the console"
+	},
+	"If statement": {
+		"prefix": "if",
+		"body": [
+			"if [ ${1:condition} ]; then",
+			"\t${2:commands}",
+			"else",
+			"\t${3:alternative commands}",
+			"fi",
+			"$0"
+		],
+		"description": "Bash if statement"
+	},
+	"Check Brackets": {
+		"prefix": "assert",
+		"body": [
+			"[[ ${1:condition} ]] || {",
+			"\t${2:echo \"Assertion failed: ${1:condition}\"}",
+			"}",
+		]
+	},
+	"If-else": {
+		"prefix": "ifelse",
+		"body": [
+			"if [ ${1:condition} ]; then",
+			"\t${2:commands}",
+			"else",
+			"\t${3:alternative commands}",
+			"fi",
+			"$0"
+		],
+		"description": "Bash if-else statement"
+	},
+	"If-elif-else": {
+		"prefix": "ifelifelse",
+		"body": [
+			"if [ ${1:condition} ]; then",
+			"\t${2:commands}",
+			"elif [ ${3:another_condition} ]; then",
+			"\t${4:alternative commands}",
+			"else",
+			"\t${5:final alternative commands}",
+			"fi",
+			"$0"
+		],
+		"description": "Bash if-elif-else statement"
+	},
+	"Case statement": {
+		"prefix": "case",
+		"body": [
+			"case ${1:variable} in",
+			"\t${2:pattern})",
+			"\t\t${3:commands}",
+		]
+	},
+	"For loop": {
+		"prefix": "for",
+		"body": [
+			"for ${1:var} in ${2:items}; do",
+			"\t${3:commands}",
+			"done",
+			"$0"
+		],
+		"description": "Bash for loop"
+	},
+	"While loop": {
+		"prefix": "while",
+		"body": [
+			"while [ ${1:condition} ]; do",
+			"\t${2:commands}",
+			"done",
+		]
+	},
+	"Function": {
+		"prefix": "func",
+		"body": [
+			"${1:function_name}() {",
+			"\t${2:commands}",
+			"}",
+		]
+	},
+	"File exists": {
+		"prefix": "fassert",
+		"body": [
+			"if [ -f \"${1:file_path}\" ]; then",
+			"\t${2:echo \"File exists\"}",
+			"else",
+			"\t${3:echo \"File does not exist\"}",
+			"fi",
+			"$0"
+		],
+		"description": "Check if a file exists"
+	},
+	"Command exists": {
+		"prefix": "cmdassert",
+		"body": [
+			"if command -v ${1:command} &> /dev/null; then",
+			"\t${2:echo \"Command exists\"}",
+			"fi"
+		],
+	},
+	"Safe mode": {
+		"prefix": "safe",
+		"body": [
+			"set -euo pipefail\n",
+		],
+		"description": "Enable safe mode in bash scripts"
+	},
+	"Array": {
+		"prefix": "array",
+		"body": [
+			"${1:array_name}=( ${2:item1} ${3:item2} ${4:item3} )",
+			"echo \"Array elements: ${1:array_name[@]}\"",
+			"$0"
+		],
+		"description": "Define and use an array in bash"
+	},
+	"Dictionary": {
+		"prefix": "dict",
+		"body": [
+			"${1:dict_name}=( [${2:key1}]=${3:value1} [${4:key2}]=${5:value2} )",
+			"echo \"Dictionary value for ${2:key1}: ${1:dict_name}[${2:key1}]\"",
+			"$0"
+		],
+		"description": "Define and use a dictionary in bash"
+	}
+}
