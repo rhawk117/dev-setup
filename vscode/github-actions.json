@@ -1,0 +1,202 @@
+{
+  "Composite action": {
+    "prefix": "composite-action",
+    "body": [
+      "name: $1",
+      "description: |\n",
+      "\tThis is a composite action that runs a script.",
+      "runs:",
+      "  using: 'composite'",
+      "  steps:",
+      "    - name: Run script",
+      "      run: |",
+      "        # Your script goes here",
+      "        echo 'Hello, World!'"
+    ]
+  },
+  "Bash step": {
+    "prefix": "do-bash",
+    "body": [
+      "- name: Run shell script",
+      "  shell: bash",
+      "  run: |",
+      "    $1",
+      "    # Add your shell commands here"
+    ]
+  },
+  "Action Input": {
+    "prefix": "action-input",
+    "body": [
+      "${1:input_name}:",
+      "\trequired: ${2:true}",
+      "\tdefault: ${3:''}",
+      "\tdescription: |",
+      "\t\t${4:Description of the input}"
+    ],
+    "description": "Define an input for a GitHub Action"
+  },
+  "Action Output": {
+    "prefix": "action-output",
+    "body": [
+      "${1:output_name}:",
+      "\tdescription: ${2:'Description of the output'}",
+      "\tvalue: ${{ steps.${3:step_id}.outputs.${1:output_name} }}"
+    ],
+    "description": "Define an output for a GitHub Action"
+  },
+  "Step": {
+    "prefix": "astep",
+    "body": ["- name: ${1:Step Name}", "  run: |", "    $3"],
+    "description": "Define a step in a GitHub Actions workflow"
+  },
+  "New workflow": {
+    "prefix": "defworkflow",
+    "body": [
+      "name: ${1:Workflow Name}",
+      "on:",
+      "  push:",
+      "    branches: [main]",
+      "  pull_request:",
+      "    branches: [main]",
+      "jobs:",
+      "  build:",
+      "    runs-on: ubuntu-latest",
+      "    steps:",
+      "      - name: Checkout code",
+      "        uses: actions/checkout@v2",
+      "      - name: Run script",
+      "        run: |",
+      "          echo 'Hello, World!'"
+    ]
+  },
+  "workflow_dispatch": {
+    "prefix": "workflow-dispatch",
+    "body": [
+      "on:",
+      "  workflow_dispatch:",
+      "    inputs:",
+      "      ${1:input_name}:",
+      "        description: '${2:Description of the input}'",
+      "        required: ${3:true}",
+      "        default: '${4:default_value}'"
+    ],
+    "description": "Define a workflow that can be manually triggered with inputs"
+  },
+  "Choice input": {
+    "prefix": "choice-input",
+    "body": [
+      "${1:input_name}:",
+      "\trequired: ${2:true}",
+      "\tdefault: ${3:'default_value'}",
+      "\tdescription: |",
+      "\t\t${4:Description of the input}",
+      "\toptions:",
+      "\t  - ${5:option1}",
+      "\t  - ${6:option2}",
+      "\t  - ${7:option3}"
+    ],
+    "description": "Define a choice input for a GitHub Action"
+  },
+  "On pull_request": {
+    "prefix": "on-pull-request",
+    "body": [
+      "on:",
+      "  pull_request:",
+      "    types: [opened, synchronize, closed, edited]",
+      "    branches:",
+      "\t  - ${1:main}",
+      "    paths: ",
+      "\t    - ${2:src/**}"
+    ],
+    "description": "Trigger a workflow on pull request events"
+  },
+  "New job": {
+    "prefix": "new-job",
+    "body": [
+      "${1:job_name}:",
+      "  runs-on: ${2:ubuntu-latest}",
+      "  if: |",
+      "\tgithub.event_name == 'push' && github.ref == 'refs/heads/main'",
+      "  steps:",
+      "    - name: Checkout code",
+      "      uses: actions/checkout@v2",
+      "    - name: Run script",
+      "      run: |",
+      "        echo 'Hello, World!'"
+    ],
+    "description": "Define a new job in a GitHub Actions workflow"
+  },
+  "Checkout code": {
+    "prefix": "checkout-code",
+    "body": ["- name: Checkout code", "  uses: actions/checkout@v${1:4}"],
+    "description": "Step to checkout code in a GitHub Actions workflow"
+  },
+  "Job outputs": {
+    "prefix": "job-outputs",
+    "body": [
+      "outputs:",
+      "  ${1:output_name}: ${{ steps.${3:step_id}.outputs.${1:output_name} }}",
+      "\tvalue: ${{ steps.${3:step_id}.outputs.${1:output_name} }}"
+    ],
+    "description": "Define outputs for a job in a GitHub Actions workflow"
+  },
+  "Step reference": {
+    "prefix": "step-reference",
+    "body": ["${{ steps.${1:step_id}.outputs.${2:output_name} }}"],
+    "description": "Define a step with an ID for reference in a GitHub Actions workflow"
+  },
+  "Var": {
+    "prefix": "var",
+    "body": "${{ $1 }}"
+  },
+  "Path": {
+    "prefix": ".git",
+    "body": "./.github/${1:actions}/$3"
+  },
+  "Declare defaults": {
+    "prefix": "dfaults",
+    "body": [
+      "defaults:",
+      "  runs: ",
+      "    shell: ${1:bash}",
+      "    working-directory: ${2:.}"
+    ],
+    "description": "Declare default values for inputs in a GitHub Action"
+  },
+  "Set output": {
+    "prefix": "export",
+    "body": ["echo \"${1:output_name}=${2:value}\" >> $GITHUB_OUTPUT"]
+  },
+  "Set environment variable": {
+    "prefix": "export-env",
+    "body": ["echo \"${1:env_var_name}=${2:value}\" >> $GITHUB_ENV"]
+  },
+  "Add to path": {
+    "prefix": "add-path",
+    "body": ["echo \"${1:path}\" >> $GITHUB_PATH"],
+    "description": "Add a directory to the PATH environment variable in a GitHub Action"
+  },
+  "Add to summary": {
+    "prefix": "+sum",
+    "body": ["echo \"${1:summary_content}\" >> $GITHUB_STEP_SUMMARY"],
+    "description": "Add content to the step summary in a GitHub Action"
+  },
+  "Write summary": {
+    "prefix": "summarize",
+    "body": [
+      "{",
+      "  echo \"## ${1:Summary}\"",
+      "  echo \"${2:Content}\"",
+      "} >> $GITHUB_STEP_SUMMARY"
+    ]
+  },
+  "Set multiple env vars from JSON": {
+    "prefix": "json-to-env",
+    "body": [
+      "{",
+      "  echo \"${1:$JSON_RESPONSE}\" | jq -r '.${2:env_vars} | to_entries[] | \"\\(.key)=\\(.value)\"'",
+      "} >> $GITHUB_ENV"
+    ],
+    "description": "Set multiple environment variables from JSON response using jq"
+  }
+}
