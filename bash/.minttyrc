@@ -1,0 +1,62 @@
+# Mirrors /usr/share/qtermwidget5/color-schemes/Kali-Dark.colorscheme
+############################################################
+
+## Font & Encoding
+FontHeight=12
+FontWeight=normal
+BoldFontWeight=bold
+
+
+## Window size & appearance
+Columns=100
+Rows=30
+Scrollbar=none
+Transparency=low
+Alpha=230             # adjust if you need more/less transparency
+
+## Title bar
+# Fallback title (before your shell escape runs)
+Title=gitbash: %~
+# Allow the shell to set it dynamically via PS1 OSC
+AllowTitleChanging=yes
+
+## Colours
+BackgroundColour=0,0,0
+ForegroundColour=255,255,255
+
+# Standard ANSI palette
+Black=31,34,41
+Red=212,25,25
+Green=94,189,171
+Yellow=254,164,76
+Blue=54,123,240
+Magenta=151,85,179
+Cyan=73,174,230
+White=230,230,230
+
+# ΓÇ£BrightΓÇ¥ versions
+BoldBlack=25,135,136
+BoldRed=236,1,1
+BoldGreen=71,212,185
+BoldYellow=255,138,24
+BoldBlue=39,127,255
+BoldMagenta=150,42,195
+BoldCyan=5,161,247
+BoldWhite=255,255,255
+
+# Use bright colours for bold text
+BoldAsColour=yes
+
+## Cursor
+CursorType=block
+# Subtly different from background so it blends in
+CursorColour=39,127,255
+
+## Behavior & UX
+Mouse=yes
+URLStyle=1           # underline URLs on hover
+BellType=none
+ScrollbackLines=5000
+FontSmoothing=full
+Font=Ubuntu Mono Medium
+FontWeight=500
