@@ -1,3 +1,4 @@
+#!/bin/bash
 
 git_branch() {
     if git rev-parse --git-dir > /dev/null 2>&1; then
