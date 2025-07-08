@@ -87,3 +87,6 @@ alias fzdiff='fzdiff'
 alias fzh='fzh'
 alias fznano='fznano'
 alias fzhelp='fzhelp'
+
+source ~/.bashrc.d/tmpv.sh
+alias tmpv='tmpv'
