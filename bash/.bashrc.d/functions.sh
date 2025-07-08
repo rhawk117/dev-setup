@@ -72,15 +72,38 @@ upby() {
   for _ in $(seq 1 "$1"); do cd ..; done
 }
 
-branch_init() {
+feature_branch() {
   local new_name=""
   local base_branch=""
 
-  while getopts "r:b:" opt; do
-    case $opt in
-      b) new_name="$OPTARG" ;;
-      r) base_branch="$OPTARG" ;;
-      *) return 1 ;;
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h|--help)
+        echo "Usage: fcheckout -b <new-branch-name> -r <base-branch>"
+        return 0
+        ;;
+      -b|--branch)
+        if [[ -n "$2" && ! "$2" =~ ^- ]]; then
+          new_name="$2"
+          shift 2
+        else
+          echo "Error: -b/--branch requires a branch name argument"
+          return 1
+        fi
+        ;;
+      -r|--base)
+        if [[ -n "$2" && ! "$2" =~ ^- ]]; then
+          base_branch="$2"
+          shift 2
+        else
+          echo "Error: -r/--base requires a base branch argument"
+          return 1
+        fi
+        ;;
+      *)
+        echo "Unknown option: $1"
+        return 1
+        ;;
     esac
   done
 
@@ -90,8 +113,8 @@ branch_init() {
     return 1
   fi
 
-  git fetch
   git checkout "$base_branch"
+  git fetch -a
   git checkout -b "$new_name"
   echo "[info] new branch '$new_name' was created from '$base_branch'."
 }
