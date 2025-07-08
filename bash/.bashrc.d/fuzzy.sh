@@ -216,7 +216,7 @@ fzvs() {
 
 fzless() {
   local file
-  file=$(find . -type f -not -path '*/\.*' 2>/dev/null | fzf \
+  file=$(find . -type f | fzf \
     --preview 'head -50 {}' \
     --preview-window=right:50%:wrap \
     --height=80% \
@@ -225,7 +225,7 @@ fzless() {
     --prompt="Select file to view: ")
 
   if [[ -n "$file" ]]; then
-      less "$file"
+    less "$file"
   fi
 }
 
@@ -245,7 +245,7 @@ fzdiff() {
     return 1
   fi
 
-  selected_file=$(find . -type f -not -path '*/\.*' 2>/dev/null | fzf \
+  selected_file=$(find . -type f -not -path '*/\.*' | fzf \
     --preview "diff --color=always -u '$reference_file' {} 2>/dev/null || echo 'Files are identical or binary'" \
     --preview-window=right:60%:wrap \
     --height=80% \
