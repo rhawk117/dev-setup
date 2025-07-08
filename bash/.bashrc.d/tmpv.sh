@@ -1,13 +1,11 @@
 #!/bin/bash
 
-TMPV_FILE="/tmp/tmpv_store_$$"
+declare -A TMPV_STORE
 
 do_ls() {
-  if [[ -f "$TMPV_FILE" ]]; then
-    while IFS='=' read -r key value; do
-      echo "$key=$value"
-    done < "$TMPV_FILE"
-  fi
+  for key in "${!TMPV_STORE[@]}"; do
+    echo "$key=${TMPV_STORE[$key]}"
+  done
 }
 
 do_set() {
@@ -19,12 +17,7 @@ do_set() {
     return 1
   fi
 
-  if [[ -f "$TMPV_FILE" ]]; then
-    grep -v "^$key=" "$TMPV_FILE" > "${TMPV_FILE}.tmp" 2>/dev/null
-    mv "${TMPV_FILE}.tmp" "$TMPV_FILE" 2>/dev/null
-  fi
-
-  echo "$key=$value" >> "$TMPV_FILE"
+  TMPV_STORE["$key"]="$value"
 }
 
 do_get() {
@@ -34,9 +27,7 @@ do_get() {
     return 1
   fi
 
-  if [[ -f "$TMPV_FILE" ]]; then
-    grep "^$key=" "$TMPV_FILE" | cut -d'=' -f2- | head -1
-  fi
+  echo "${TMPV_STORE[$key]}"
 }
 
 do_rm() {
@@ -46,21 +37,7 @@ do_rm() {
     return 1
   fi
 
-  if [[ -f "$TMPV_FILE" ]] && grep -q "^$key=" "$TMPV_FILE"; then
-    grep -v "^$key=" "$TMPV_FILE" > "${TMPV_FILE}.tmp"
-    mv "${TMPV_FILE}.tmp" "$TMPV_FILE"
-  fi
-}
-
-do_usage() {
-  cat << 'EOF'
-Usage:
-  tmpv -s <key> <value>    Set variable
-  tmpv <key>               Get variable value
-  tmpv -ls                 List all variables
-  tmpv -rm <key>           Remove variable
-  tmpv -c                  Clear all variables
-EOF
+  unset TMPV_STORE["$key"]
 }
 
 tmpv() {
@@ -75,15 +52,18 @@ tmpv() {
       do_rm "$2"
       ;;
     -c|--clear)
-      [[ -f "$TMPV_FILE" ]] && rm "$TMPV_FILE"
+      TMPV_STORE=()
       ;;
     -h|--help|"")
-      do_usage
+      echo "Usage:"
+      echo "  tmpv -s <key> <value>    # Set variable"
+      echo "  tmpv <key>               # Get variable value"
+      echo "  tmpv -ls                 # List all variables"
+      echo "  tmpv -rm <key>           # Remove variable"
+      echo "  tmpv -c                  # Clear all variables"
       ;;
     *)
       do_get "$1"
       ;;
   esac
 }
-
-trap 'rm -f "$TMPV_FILE"' EXIT
