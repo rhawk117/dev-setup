@@ -12,7 +12,12 @@ do_set() {
   local key="$1"
   local value="$2"
 
-  if [[ -z "$key" || -z "$value" ]]; then
+  if [[ -z "$key" ]]; then
+    echo "Usage: tmpv -s <key> <value>" >&2
+    return 1
+  fi
+
+  if [[ -z "$value" ]]; then
     echo "Usage: tmpv -s <key> <value>" >&2
     return 1
   fi
@@ -42,7 +47,7 @@ do_rm() {
 
 tmpv() {
   case "$1" in
-    -ls|--list)
+    -l|--list)
       do_ls
       ;;
     -s|--set)
@@ -58,7 +63,7 @@ tmpv() {
       echo "Usage:"
       echo "  tmpv -s <key> <value>    # Set variable"
       echo "  tmpv <key>               # Get variable value"
-      echo "  tmpv -ls                 # List all variables"
+      echo "  tmpv -l                 # List all variables"
       echo "  tmpv -rm <key>           # Remove variable"
       echo "  tmpv -c                  # Clear all variables"
       ;;
