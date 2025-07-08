@@ -214,14 +214,78 @@ fzvs() {
   fi
 }
 
+fzless() {
+  local file
+  file=$(find . -type f -not -path '*/\.*' 2>/dev/null | fzf \
+    --preview 'head -50 {}' \
+    --preview-window=right:50%:wrap \
+    --height=80% \
+    --border \
+    --info=inline \
+    --prompt="Select file to view: ")
+
+  if [[ -n "$file" ]]; then
+      less "$file"
+  fi
+}
+
+
+fzdiff() {
+  local reference_file="$1"
+  local selected_file
+
+  if [[ -z "$reference_file" ]]; then
+    echo "Usage: fzdiff <reference_file>"
+    echo "  reference_file    File to compare against (shown on left side of diff)"
+    return 1
+  fi
+
+  if [[ ! -f "$reference_file" ]]; then
+    echo "Error: Reference file '$reference_file' not found"
+    return 1
+  fi
+
+  selected_file=$(find . -type f -not -path '*/\.*' 2>/dev/null | fzf \
+    --preview "diff --color=always -u '$reference_file' {} 2>/dev/null || echo 'Files are identical or binary'" \
+    --preview-window=right:60%:wrap \
+    --height=80% \
+    --border \
+    --info=inline \
+    --prompt="Select file to compare with '$reference_file': "
+  )
+
+  if [[ -n "$selected_file" ]]; then
+    diff -u "$reference_file" "$selected_file"
+  fi
+}
+
+
+fzh() {
+  local cmd
+  cmd=$(history | sort -k1,1nr | perl -pe 's/^\s*[0-9]+\s*//' | fzf \
+    --height=40% \
+    --border \
+    --info=inline \
+    --prompt="History: " \
+    --no-preview\
+  )
+
+  if [[ -n "$cmd" ]]; then
+    echo "$cmd"
+    eval "$cmd"
+  fi
+}
+
 fzhelp() {
-  echo "fzf commands:"
-  echo "  fzls    - Find files matching a pattern and preview their content."
-  echo "  fzinfo  - Find files and preview their information."
-  echo "  fzcomp  - List available commands and show their type."
-  echo "  fzcd    - Change directory using fzf."
-  echo "  fzclip  - Copy selected text to clipboard."
-  echo "  fzvs    - Open selected directory in Visual Studio Code."
-  echo "  fzhelp  - Show this help message."
-  echo ""
+  cat <<EOF
+fzls: Find files and preview their content.
+fzinfo: Find files and preview their information.
+fzcomp: Select a command and show its type.
+fzcd: Change directory using fzf.
+fzclip: Copy selected text to clipboard.
+fzvs: Open selected directory in VS Code.
+fzless: View file content with less.
+fzdiff: Compare a file with a reference file using diff.
+fzh: Search through command history and execute selected command.
+EOF
 }

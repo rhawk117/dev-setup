@@ -2,13 +2,30 @@
 
 # git_publish: add, commit with -m, and optional --pull
 git_pub() {
+
+  usage() {
+    cat <<EOF
+Usage: git_pub [-m <message>] [-s|--sync] [-p|--
+push>]
+  -m --message   Commit message (required)
+
+  -s, --sync     Pull changes before committing
+  -p, --push     Push changes after committing
+EOF
+  }
+
   local message=""
   local do_pull=false
   local do_push=false
   # parse arguments
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -m)
+      -h|--help)
+        usage
+        return 0
+        ;;
+
+      -m|--message)
         if [[ -n $2 && ${2:0:1} != "-" ]]; then
           message="$2"
           shift 2
@@ -80,10 +97,36 @@ branch_init() {
 }
 
 rglob() {
-  if [[ -z "$1" ]]; then
+  local pattern
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h|--help)
+        echo "Usage: rglob <pattern>"
+        return 0
+        ;;
+      -p|--pattern)
+        pattern="$2"
+        shift 2
+        ;;
+
+      -t|--type)
+        type="$2"
+        shift 2
+        ;;
+
+      *)
+        break
+        ;;
+    esac
+  done
+
+  type=${type:-f}
+  pattern=${pattern:-"$1"}
+
+  [ -z "$pattern" ] && {
     echo "Usage: rglob <pattern>"
     return 1
-  fi
+  }
 
   find . -name "$1" -type f
 }

@@ -11,7 +11,6 @@
 SNAPSHOT_PATH=""
 
 
-
 bkmark() {
   do_path() {
     export SNAPSHOT_PATH="$PWD"
@@ -28,7 +27,7 @@ bkmark() {
   }
 
   do_show() {
-    echo "[ ◯ ] bookmark -> ${SNAPSHOT_PATH:-none}"
+    echo "${SNAPSHOT_PATH:-none}"
   }
 
   if [[ -z "$1" ]]; then
