@@ -1,16 +1,8 @@
-#!/usr/bin/env bash
-
-# ─────────────────────────────────────────────
-# SNAP CLI Tool
-# Usage:
-#   snap path   # save current directory
-#   snap go     # go to saved path
-#   snap show   # show saved path
-# ─────────────────────────────────────────────
+#!/bin/bash
 
 SNAPSHOT_PATH=""
 
-
+# custom bookmarking of paths
 bkmark() {
   do_path() {
     export SNAPSHOT_PATH="$PWD"

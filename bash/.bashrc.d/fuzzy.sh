@@ -205,12 +205,43 @@ fzclip() {
 }
 
 fzvs() {
-  local dir
-  dir=$(find . -type d 2>/dev/null | fzf --height 40% --reverse --prompt="Select directory to open in VS Code: ")
-  if [ -n "$dir" ]; then
-    code "$dir"
+  local target_type="d"
+  local prompt="Select directory to open in VS Code: "
+  local preview_cmd="if [ -d {} ]; then ls -la {}; else bat --style=numbers --color=always {} 2>/dev/null || cat {} 2>/dev/null || echo 'Cannot preview file'; fi"
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -f|--files)
+        target_type="f"
+        prompt="Select file to open in VS Code: "
+        shift
+        ;;
+      -h|--help)
+        echo "Usage: fzvs [-f|--files] [-h|--help]"
+        echo "  -f, --files    Search for files instead of directories"
+        echo "  -h, --help     Show this help message"
+        return 0
+        ;;
+      *)
+        echo "Unknown option: $1"
+        return 1
+        ;;
+    esac
+  done
+
+  local target
+  target=$(find . -type "$target_type" | fzf \
+    --height 50% \
+    --reverse \
+    --prompt="$prompt" \
+    --preview="$preview_cmd" \
+    --preview-window=right:60%:wrap
+  )
+
+  if [ -n "$target" ]; then
+    code "$target"
   else
-    echo "No directory selected."
+    echo "No $([ "$target_type" = "d" ] && echo "directory" || echo "file") selected."
   fi
 }
 
@@ -218,7 +249,7 @@ fzless() {
   local file
   file=$(find . -type f | fzf \
     --preview 'head -50 {}' \
-    --preview-window=right:50%:wrap \
+    --preview-window=right:60%:wrap \
     --height=80% \
     --border \
     --info=inline \
@@ -247,8 +278,8 @@ fzdiff() {
 
   selected_file=$(find . -type f -not -path '*/\.*' | fzf \
     --preview "diff --color=always -u '$reference_file' {} 2>/dev/null || echo 'Files are identical or binary'" \
-    --preview-window=right:60%:wrap \
-    --height=80% \
+    --preview-window=right:80%:wrap \
+    --height=90% \
     --border \
     --info=inline \
     --prompt="Select file to compare with '$reference_file': "
@@ -276,16 +307,36 @@ fzh() {
   fi
 }
 
+fznano() {
+  local file
+  file=$(find . -type f 2>/dev/null | fzf \
+    --height 40% \
+    --reverse \
+    --prompt="Select file to open in nano: " \
+    --preview="bat --style=numbers --color=always {} 2>/dev/null || cat {} 2>/dev/null || echo 'Cannot preview file'" \
+    --preview-window=right:50%:wrap)
+
+  if [ -n "$file" ]; then
+    nano "$file"
+  else
+    echo "No file selected."
+  fi
+}
+
+
 fzhelp() {
   cat <<EOF
-fzls: Find files and preview their content.
-fzinfo: Find files and preview their information.
-fzcomp: Select a command and show its type.
-fzcd: Change directory using fzf.
-fzclip: Copy selected text to clipboard.
-fzvs: Open selected directory in VS Code.
-fzless: View file content with less.
-fzdiff: Compare a file with a reference file using diff.
-fzh: Search through command history and execute selected command.
+[Fuzzy Finder Commands]
+  fzls       - Find files and preview their content
+  fzinfo     - Find files and preview their information
+  fzcomp     - List commands and show their type
+  fzcd       - Change directory using fuzzy search
+  fzclip     - Copy selected text to clipboard
+  fzvs       - Open selected file or directory in VS Code
+  fzless     - View file content with preview
+  fzdiff     - Compare selected file with a reference file
+  fzh        - Search command history and execute selected command
+  fznano     - Open selected file in nano editor
+  fzhelp     - Show this help message
 EOF
 }

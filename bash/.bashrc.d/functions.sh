@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# git_publish: add, commit with -m, and optional --pull
-git_pub() {
+# gitsnap: add, commit with -m, and optional --pull
+gitsnap() {
 
   usage() {
     cat <<EOF
@@ -11,13 +11,14 @@ push>]
 
   -s, --sync     Pull changes before committing
   -p, --push     Push changes after committing
+  -a, --add      Specify files or directories to add (default: '.')
 EOF
   }
 
   local message=""
   local do_pull=false
   local do_push=false
-  # parse arguments
+  local add='.'
   while [[ $# -gt 0 ]]; do
     case "$1" in
       -h|--help)
@@ -34,14 +35,28 @@ EOF
           return 1
         fi
         ;;
+
+
       -s|--sync)
         do_pull=true
-        shift
+        shift 1
         ;;
+
       -p|--push)
         do_push=true
-        shift
+        shift 1
         ;;
+
+      -a|--add)
+        if [[ -n $2 && ${2:0:1} != "-" ]]; then
+          add="$2"
+          shift 2
+        else
+          echo "Error: -a requires a file or directory to add" >&2
+          return 1
+        fi
+        ;;
+
       *)
         echo "Unknown option: $1" >&2
         return 1
@@ -54,7 +69,7 @@ EOF
     git pull || return $?
   fi
 
-  git add . || return $?
+  git add "$add" || return $?
 
   if ! git commit -m "$message"; then
     echo "Commit failed. Please check your changes."
@@ -65,14 +80,8 @@ EOF
     git push || return $?
   fi
 }
-
-
-
-upby() {
-  for _ in $(seq 1 "$1"); do cd ..; done
-}
-
-feature_branch() {
+# gitfeat: create a new branch from a base branch, this helps me always sync local with remote bc i always forget
+gitfeat() {
   local new_name=""
   local base_branch=""
 
@@ -118,6 +127,13 @@ feature_branch() {
   git checkout -b "$new_name"
   echo "[info] new branch '$new_name' was created from '$base_branch'."
 }
+
+
+upby() {
+  for _ in $(seq 1 "$1"); do cd ..; done
+}
+
+
 
 rglob() {
   local pattern

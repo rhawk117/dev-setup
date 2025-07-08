@@ -19,34 +19,55 @@ set_ps1() {
 PROMPT_COMMAND=set_ps1
 
 alias up='cd ..'
+# --color default bins--
 alias ll='ls -la --color=auto'
 alias ls='ls --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
+alias dir='ls --color=auto --format=vertical'
+alias cp='cp -v'
+alias mv='mv -v'
+alias rm='rm -v'
+alias mkdir='mkdir -v'
+alias rmdir='rmdir -v'
 alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias rgrep='rgrep --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip --color=auto'
 alias tree='tree -C'
-alias show_conf='cat ~/.bashrc'
-alias edit_conf='nano ~/.bashrc'
-alias reload='source ~/.bashrc'
-alias snipmd='uv run ~/Work/repos/snip_md/snipmd/main.py'
-
-
-alias git_log='git log --graph --oneline --decorate'
-alias dir_ins='cd ~/Work/main/Insurance/'
-alias py='/c/Users/hawkinsr/AppData/Local/Programs/Python/Python312/python.exe'
-alias docs='cd ~/Work/project_doc'
-
-alias uv='~/AppData/Local/Programs/Python/Python312/Scripts/uv.exe'
-alias uvx='~/AppData/Local/Programs/Python/Python312/Scripts/uvx.exe'
-
-
+alias ps='ps --color=auto'
+alias more='less -R'
+alias cat='cat -n'
 alias df='df -h'
 alias du='du -h'
 
+# --alias management--
+alias show_conf='cat ~/.bashrc'
+alias edit_conf='nano ~/.bashrc'
+alias reload='source ~/.bashrc'
 
-#  -- custom wrappers ---
+# --git aliases--
+alias git_log='git log --graph --oneline --decorate'
+
+# Directory shortcuts
+alias dir_ins='cd ~/Work/main/Insurance/'
+alias docs='cd ~/Work/project_doc'
+
+# --python aliases--
+alias py='~/AppData/Local/Programs/Python/Python312/python.exe'
+alias uv='~/AppData/Local/Programs/Python/Python312/Scripts/uv.exe'
+alias uvx='~/AppData/Local/Programs/Python/Python312/Scripts/uvx.exe'
+
+# --project cli tools i made--
+alias snipmd='uv run ~/Work/repos/snip_md/snipmd/main.py'
+alias bdd_run='uv run ~/Work/bdd_run/main.py'
+
+# --custom wrappers--
 source ~/.bashrc.d/functions.sh
-alias git_pub='git_pub'
+alias gitsnap='gitsnap'
+alias gitfeat='gitfeat'
 alias upby='upby'
 alias branch_init='branch_init'
 alias rglob='rglob'
@@ -61,8 +82,8 @@ alias fzcomp='fzcomp'
 alias fzcd='fzcd'
 alias fzclip='fzclip'
 alias fzvs='fzvs'
-alias fzhelp='fzhelp'
 alias fzless='fzless'
 alias fzdiff='fzdiff'
 alias fzh='fzh'
-alias bdd_run='uv run /c/Users/hawkinsr/Work/bdd_run/main.py'
+alias fznano='fznano'
+alias fzhelp='fzhelp'
