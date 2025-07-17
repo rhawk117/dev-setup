@@ -53,7 +53,6 @@ alias git_log='git log --graph --oneline --decorate'
 alias gc='git checkout'
 
 
-# Directory shortcuts
 alias dir_ins='cd ~/Work/main/Insurance/'
 alias docs='cd ~/Work/project_doc'
 

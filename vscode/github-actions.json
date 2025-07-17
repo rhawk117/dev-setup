@@ -36,7 +36,7 @@
     "description": "Define an input for a GitHub Action"
   },
   "Action Output": {
-    "prefix": "action-output",
+    "prefix": "out",
     "body": [
       "${1:output_name}:",
       "\tdescription: ${2:'Description of the output'}",
@@ -45,12 +45,12 @@
     "description": "Define an output for a GitHub Action"
   },
   "Step": {
-    "prefix": "astep",
+    "prefix": "step",
     "body": ["- name: ${1:Step Name}", "  run: |", "    $3"],
     "description": "Define a step in a GitHub Actions workflow"
   },
   "New workflow": {
-    "prefix": "defworkflow",
+    "prefix": "workflow",
     "body": [
       "name: ${1:Workflow Name}",
       "on:",
@@ -70,7 +70,7 @@
     ]
   },
   "workflow_dispatch": {
-    "prefix": "workflow-dispatch",
+    "prefix": "dispatch",
     "body": [
       "on:",
       "  workflow_dispatch:",
@@ -83,7 +83,7 @@
     "description": "Define a workflow that can be manually triggered with inputs"
   },
   "Choice input": {
-    "prefix": "choice-input",
+    "prefix": "choice",
     "body": [
       "${1:input_name}:",
       "\trequired: ${2:true}",
@@ -111,7 +111,7 @@
     "description": "Trigger a workflow on pull request events"
   },
   "New job": {
-    "prefix": "new-job",
+    "prefix": "job",
     "body": [
       "${1:job_name}:",
       "  runs-on: ${2:ubuntu-latest}",
@@ -172,12 +172,12 @@
     "body": ["echo \"${1:env_var_name}=${2:value}\" >> $GITHUB_ENV"]
   },
   "Add to path": {
-    "prefix": "add-path",
+    "prefix": "path",
     "body": ["echo \"${1:path}\" >> $GITHUB_PATH"],
     "description": "Add a directory to the PATH environment variable in a GitHub Action"
   },
   "Add to summary": {
-    "prefix": "+sum",
+    "prefix": "summary",
     "body": ["echo \"${1:summary_content}\" >> $GITHUB_STEP_SUMMARY"],
     "description": "Add content to the step summary in a GitHub Action"
   },

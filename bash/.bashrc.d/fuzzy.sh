@@ -349,9 +349,6 @@ fzgc() {
   git checkout "$branch"
 }
 
-
-
-
 fzhelp() {
   cat <<EOF
 [Fuzzy Finder Commands]
