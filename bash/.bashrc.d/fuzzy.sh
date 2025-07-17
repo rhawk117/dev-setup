@@ -260,6 +260,21 @@ fzless() {
   fi
 }
 
+fzmore() {
+  local file
+  file=$(find . -type f | fzf \
+    --preview 'head -50 {}' \
+    --preview-window=right:60%:wrap \
+    --height=80% \
+    --border \
+    --info=inline \
+    --prompt="Select file to view: ")
+
+  if [[ -n "$file" ]]; then
+    more "$file"
+  fi
+}
+
 
 fzdiff() {
   local reference_file="$1"
@@ -323,6 +338,19 @@ fznano() {
   fi
 }
 
+fzgc() {
+  local branch
+  branch=$(
+    git branch --all --color=always         \
+      | sed 's/^[* ]*//'                     \
+      | sed 's#remotes/[^/]*/##'             \
+      | fzf --ansi --height 40% --reverse    \
+  ) || return
+  git checkout "$branch"
+}
+
+
+
 
 fzhelp() {
   cat <<EOF
@@ -338,5 +366,7 @@ fzhelp() {
   fzh        - Search command history and execute selected command
   fznano     - Open selected file in nano editor
   fzhelp     - Show this help message
+  fzgc       - Checkout a git branch
+  fzmore     - View file content with more command
 EOF
 }

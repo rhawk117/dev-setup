@@ -50,6 +50,8 @@ alias reload='source ~/.bashrc'
 
 # --git aliases--
 alias git_log='git log --graph --oneline --decorate'
+alias gc='git checkout'
+
 
 # Directory shortcuts
 alias dir_ins='cd ~/Work/main/Insurance/'
