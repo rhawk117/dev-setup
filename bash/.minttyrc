@@ -1,4 +1,4 @@
-# Mirrors /usr/share/qtermwidget5/color-schemes/Kali-Dark.colorscheme
+# inspired by color-schemes/Kali-Dark.colorscheme
 ############################################################
 
 ## Font & Encoding
@@ -12,19 +12,17 @@ Columns=100
 Rows=30
 Scrollbar=none
 Transparency=low
-Alpha=230             # adjust if you need more/less transparency
+Alpha=230
 
 ## Title bar
-# Fallback title (before your shell escape runs)
 Title=gitbash: %~
-# Allow the shell to set it dynamically via PS1 OSC
 AllowTitleChanging=yes
 
-## Colours
+## colors
 BackgroundColour=0,0,0
 ForegroundColour=255,255,255
 
-# Standard ANSI palette
+# ANSI palette
 Black=31,34,41
 Red=212,25,25
 Green=94,189,171
@@ -49,12 +47,11 @@ BoldAsColour=yes
 
 ## Cursor
 CursorType=block
-# Subtly different from background so it blends in
 CursorColour=39,127,255
 
 ## Behavior & UX
 Mouse=yes
-URLStyle=1           # underline URLs on hover
+URLStyle=1
 BellType=none
 ScrollbackLines=5000
 FontSmoothing=full
